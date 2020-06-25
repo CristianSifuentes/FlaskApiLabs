@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "c:\\Users\\sifue\\Desktop\\repositorios\\FlaskApiLabs\\env\\Scripts\\python.exe"
+    "python.pythonPath": "c:\\Users\\sifue\\Desktop\\repositorios\\FlaskApiLabs\\env\\Scripts\\python.exe",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint-flask"
+    ]
 }
