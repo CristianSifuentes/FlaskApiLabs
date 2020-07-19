@@ -1,6 +1,6 @@
 from flask import jsonify
 from flask import Blueprint
-
+from .models.task import Task
 from .response import response
 
 api_v1 = Blueprint('api',__name__, url_prefix='/api/v1')
@@ -11,9 +11,10 @@ def index():
 
 @api_v1.route('/tasks', methods=['GET'])
 def get_tasks():
-      return response({
-           "message": "New message"
-      })
+     tasks = Task.query.all()
+     return response([
+           task.serialize() for task in tasks
+     ])
 
 
 @api_v1.route('/task', methods=['GET'])
