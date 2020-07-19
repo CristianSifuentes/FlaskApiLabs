@@ -14,23 +14,26 @@ def get_tasks():
       })
 
 
-# @api_v1.route('/task', methods=['GET'])
-#   def get_task():
-#       pass
-    
+@api_v1.route('/task', methods=['GET'])
+def get_task():
+      return jsonify({
+           'message': '/task/get_task'
+      })
 
-
-# @api_v1.route('/tasks', methods=['POST'])
-#   def create_task():
-#       pass
-
-
-# @api_v1.route('/tasks/<id>', methods=['PUT'])
-#   def update_task():
-#       pass
-    
-
-# @api_v1.route('/tasks/<id>', methods=['DELETE'])
-#   def delete_task():
-#       pass
-    
+@api_v1.route('/tasks', methods=['POST'])
+def create_task():
+      return jsonify({
+           'message': '/task/create_task'
+      })
+   
+@api_v1.route('/tasks/<id>', methods=['PUT'])
+def update_task():
+    return jsonify({
+           'message': '/task/update_task'
+      })
+   
+@api_v1.route('/tasks/<id>', methods=['DELETE'])
+def delete_task():
+       return jsonify({
+           'message': '/task/delete_task'
+      })
