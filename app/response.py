@@ -5,3 +5,11 @@ def response(data):
         'succes': True,
         "data": data
     }),200
+
+def not_found():
+    return jsonify({
+        'succes': False,
+        'data': {},
+        'message': 'Resource not found',
+        'code': 404
+    }),404
