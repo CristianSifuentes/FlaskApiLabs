@@ -13,3 +13,11 @@ def not_found():
         'message': 'Resource not found',
         'code': 404
     }),404
+    
+def bad_request():
+    return jsonify({
+        'succes': False,
+        'data': {},
+        'message': 'Bad request',
+        'code': 400
+    }),400

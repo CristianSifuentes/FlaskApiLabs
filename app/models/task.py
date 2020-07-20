@@ -20,8 +20,18 @@ class Task(db.Model):
             'description': self.description,
             'deadline': self.deadline
         }
-
-
+        
+    @classmethod
+    def new(cls, title, description, deadline):
+        return Task(title=title, description=description, deadline=deadline)
+    
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 def insert_task(*args, **kwargs):
     db.session.add(
