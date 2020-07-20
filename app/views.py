@@ -50,10 +50,22 @@ def create_task():
      return bad_request()
 
 @api_v1.route('/tasks/<id>', methods=['PUT'])
-def update_task():
-    return jsonify({
-           'message': '/task/update_task'
-      })
+def update_task(id):
+     task = Task.query.filter_by(id=id).first()
+     
+     if task is None:
+          return not_found()
+     
+     json = request.get_json(force=True)
+     task.title = json.get('title') 
+     task.description = json.get('description') 
+     task.deadline = json.get('deadline') 
+     
+     if task.save():
+          return response(task.serialize())
+     
+     return bad_request()
+
    
 @api_v1.route('/tasks/<id>', methods=['DELETE'])
 def delete_task():
