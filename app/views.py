@@ -68,7 +68,14 @@ def update_task(id):
 
    
 @api_v1.route('/tasks/<id>', methods=['DELETE'])
-def delete_task():
-       return jsonify({
-           'message': '/task/delete_task'
-      })
+def delete_task(id):
+     task = Task.query.filter_by(id=id).first()
+     
+     if task is None:
+          return not_found()
+     
+     if task.delete():
+          return response(task.serialize())
+     
+     return bad_request()
+   

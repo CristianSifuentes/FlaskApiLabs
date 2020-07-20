@@ -32,6 +32,14 @@ class Task(db.Model):
             return True
         except:
             return False
+        
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 def insert_task(*args, **kwargs):
     db.session.add(
