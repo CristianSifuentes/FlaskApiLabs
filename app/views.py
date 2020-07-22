@@ -13,7 +13,12 @@ def index():
 
 @api_v1.route('/tasks', methods=['GET'])
 def get_tasks():
-     tasks = Task.query.all()
+     page = int(request.args.get('page', 1)) #Dic
+     order = request.args.get('order', 'desc')
+
+     print(order, page)
+     
+     tasks = Task.get_by_page(order, page)
      return response([
            task.serialize() for task in tasks
      ])
