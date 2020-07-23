@@ -27,9 +27,9 @@ class Task(db.Model):
         return Task(title=title, description=description, deadline=deadline)
     
     @classmethod
-    def get_by_page(cls, order, page, per_page=3):
-        sort = desc(Task.id) if order == 'desc' else asc(Task.id)
-        return Task.query.order_by(sort).paginate(page, order, per_page).items
+    def get_by_page(cls, order, page, per_page=4):
+        # sort = desc(Task.id) if order == 'desc' else asc(Task.id)
+        return Task.query.order_by(asc(Task.id)).paginate(page, order, per_page).items
     
     
     def save(self):

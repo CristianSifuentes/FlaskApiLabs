@@ -7,6 +7,18 @@ from .response import not_found
 from .response import bad_request
 api_v1 = Blueprint('api',__name__, url_prefix='/api/v1')
 
+def set_task(function):
+     def wrap(*args, **kwargs):
+          id = kwargs.get('id', 0)
+          task = Task.query.filter_by(id=id).first()
+          
+          if task is None:
+               return not_found()
+          
+          return function(task)
+     wrap.__name__ = function.__name__
+     return wrap
+
 @api_v1.route('/')
 def index():
     return 'Hello!'
@@ -17,20 +29,16 @@ def get_tasks():
      order = request.args.get('order', 'desc')
 
      print(order, page)
-     
+     # return not_found()
      tasks = Task.get_by_page(order, page)
      return response([
-           task.serialize() for task in tasks
+          task.serialize() for task in tasks
      ])
 
 
 @api_v1.route('/tasks/<id>', methods=['GET'])
-def get_task(id):
-     task = Task.query.filter_by(id=id).first()
-     
-     if task is None:
-          return not_found()
-          
+@set_task
+def get_task(task):
      return response([
            task.serialize()
      ])
@@ -55,12 +63,9 @@ def create_task():
      return bad_request()
 
 @api_v1.route('/tasks/<id>', methods=['PUT'])
-def update_task(id):
-     task = Task.query.filter_by(id=id).first()
-     
-     if task is None:
-          return not_found()
-     
+@set_task
+def update_task(task):
+
      json = request.get_json(force=True)
      task.title = json.get('title') 
      task.description = json.get('description') 
@@ -73,11 +78,8 @@ def update_task(id):
 
    
 @api_v1.route('/tasks/<id>', methods=['DELETE'])
-def delete_task(id):
-     task = Task.query.filter_by(id=id).first()
-     
-     if task is None:
-          return not_found()
+@set_task
+def delete_task(task):
      
      if task.delete():
           return response(task.serialize())
