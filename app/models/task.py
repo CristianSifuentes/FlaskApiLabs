@@ -14,13 +14,13 @@ class Task(db.Model):
     def __str__(self):
         return self.title
     
-    def serialize(self):
-        return {
-            'id': self.id,
-            'title': self.title,
-            'description': self.description,
-            'deadline': self.deadline
-        }
+    # def serialize(self):
+    #     return {
+    #         'id': self.id,
+    #         'title': self.title,
+    #         'description': self.description,
+    #         'deadline': self.deadline
+    #     }
         
     @classmethod
     def new(cls, title, description, deadline):
@@ -29,8 +29,14 @@ class Task(db.Model):
     @classmethod
     def get_by_page(cls, order, page, per_page=4):
         # sort = desc(Task.id) if order == 'desc' else asc(Task.id)
-        return Task.query.order_by(asc(Task.id)).paginate(page, order, per_page).items
-    
+        # return Task.query.paginate(page, per_page).items
+        return Task.query.all()
+ 
+    @classmethod
+    def get_tasks(cls):
+        # sort = desc(Task.id) if order == 'desc' else asc(Task.id)
+        # return Task.query.paginate(page, per_page).items
+        return Task.query.all()   
     
     def save(self):
         try:

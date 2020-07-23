@@ -5,3 +5,4 @@ This is a repository for learn something about Flask in APIs
 
 pip install Flask-SQLAlchemy
 pip psycopg2
+pip install -U marshmallow
